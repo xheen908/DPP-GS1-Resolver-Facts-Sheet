@@ -340,3 +340,27 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
     "manufacturer": "MediCoinSwiss AG"
 }
 ```
+
+---
+
+## 📅 Deployment-Zeitplan (Richtwert)
+
+| Phase | Inhalt | Dauer |
+|---|---|---|
+| **Phase 1** | ERP-Anbindung definieren: Datenschnittstelle, Feldmapping, Authentifizierung | Woche 1–2 |
+| **Phase 2** | Integration & E2E-Tests in Ihrer Infrastruktur, Compliance-Firewall-Kalibrierung auf Ihre Produktdaten | Woche 3–6 |
+| **Phase 3** | Staging → Produktion, Übergabe Dokumentation & Monitoring | Woche 7–8 |
+
+**Gesamtdauer: ca. 8 Wochen** bis zum produktionsbereiten, vollständig validierten GS1 Resolver.
+
+*Der Zeitplan setzt voraus, dass ein ERP-Zugang oder ein definiertes Daten-Interface in Phase 1 bereitgestellt wird.*
+
+---
+
+## ⚠️ Hinweis zur Namespace-Konvention (Transparenz)
+
+Der in diesem Resolver verwendete `dpp:`-Namespace-Prefix (`https://ec.europa.eu/espr/dpp/v1#`) ist eine etablierte Konvention, die vom CoE-DPP, TNO und den CIRPASS-2 Referenzimplementierungen so praktiziert wird.
+
+Die EU-Kommission hat die ESPR-Verordnung legislativ verabschiedet, das zugehörige technische RDF/JSON-LD Vokabular unter dieser URI jedoch noch nicht offiziell publiziert. Dieses Delta zwischen legislativem und technischem Zeitplan betrifft **alle** aktuellen DPP-Implementierungen weltweit – es gibt derzeit keine alternative konforme Lösung.
+
+Sobald die EU das offizielle Vokabular veröffentlicht, ist die Anpassung im Resolver ein **einzeiliger Konfigurationschange** – ohne Auswirkung auf die Architektur oder die Produktionsdaten.
