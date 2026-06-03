@@ -8,13 +8,15 @@ Dieses Repository enthält die Kern-Infrastruktur des DPP GS1 Resolvers. Er wurd
 
 ## 🛡️ Executive Summary für CEO & CTO: Die Eliminierung von Compliance-Risiken
 
+> *"Ein Medizinprodukt mit unvollständigem DPP kann seit ESPR nicht mehr in der EU vertrieben werden. Dieser Resolver macht es technisch unmöglich, diesen Fehler zu machen."*
+
 Die größte strategische und finanzielle Gefahr bei der Einführung des Digitalen Produktpasses (ESPR) sind fehlerhafte, inkonsistente oder veraltete Produktdaten. Solche Dateninkonsistenzen können bei Audits durch EU-Behörden zu empfindlichen Strafen, Reputationsverlust oder gar Vertriebsverboten führen.
 
 Dieses System eliminiert diese Gefahren radikal durch eine **strikte, zustandslose (Stateless) Architektur**:
 
 1. **Keine redundante Datenhaltung (Zero-DB):** Das System speichert keine Produktdaten dauerhaft. Es agiert als intelligenter, kryptografischer "Durchlauferhitzer" (Resolver). Die Daten verbleiben in der Hoheit Ihrer bestehenden Master-Systeme (ERP, SAP). Der Resolver zieht diese Daten in Echtzeit, signiert sie kryptografisch und liefert sie aus. 
    **Das Resultat:** Es gibt keine desynchronisierten Datenbanken, keine DSGVO-Gefahren durch verwaiste Datensätze und keine "Single Points of Failure" in der Datenhaltung.
-2. **Die Hard-Blocking Compliance Firewall:** Das System besitzt eine integrierte, unumgehbare Validierungs-Engine für den CEN/CENELEC JTC 24 Standard. Fehlt in den Quell-Daten ein von der EU gesetzlich vorgeschriebenes Feld (z.B. der `carbonFootprint`), greift ein sofortiger **HTTP 500 Hard-Block**. 
+2. **Die Hard-Blocking Compliance Firewall:** Das System besitzt eine integrierte, unumgehbare Validierungs-Engine für den CEN/CENELEC JTC 24 Standard. Fehlt in den Quell-Daten ein von der EU gesetzlich vorgeschriebenes Feld (z.B. der `carbonFootprint`), greift ein sofortiger **HTTP 422 Hard-Block**. 
    **Das Resultat:** Es ist technisch absolut unmöglich, versehentlich einen unvollständigen oder illegalen Produktpass an eine Behörde oder einen Kunden auszuliefern.
 
 ---
@@ -56,10 +58,10 @@ Das System unterliegt strengsten End-to-End (E2E) Tests, die in einer isolierten
 Auszug aus den automatisierten Live-Tests:
 ```text
 ✓ E2E: Liefert vollständigen, absolut validen JTC 24 / ESPR Pass aus (HTTP 200)
-✓ E2E: Blockiert Live-Request, wenn gesetzliche Batch-Number fehlt (HTTP 500)
-✓ E2E: Blockiert Live-Request, wenn Herstellungsdatum fehlt (HTTP 500)
-✓ E2E: Blockiert Live-Request, wenn CO2-Fußabdruck fehlt (HTTP 500)
-✓ E2E: Blockiert Live-Request, wenn Wirtschafts-Akteur fehlt (HTTP 500)
+✓ E2E: Blockiert Live-Request, wenn gesetzliche Batch-Number fehlt (HTTP 422)
+✓ E2E: Blockiert Live-Request, wenn Herstellungsdatum fehlt (HTTP 422)
+✓ E2E: Blockiert Live-Request, wenn CO2-Fußabdruck fehlt (HTTP 422)
+✓ E2E: Blockiert Live-Request, wenn Wirtschafts-Akteur fehlt (HTTP 422)
 ✓ E2E: (Content Negotiation): Liefert Asset Administration Shell (AAS) Format
 ✓ E2E: (Content Negotiation): Liefert flaches ERP-JSON
 ```
@@ -138,7 +140,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 12.5,
-            "unit": "kg CO2eq"
+            "unit": "KGM"
         },
         "dpp:materialComposition": [
             {
@@ -229,7 +231,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 12.5,
-            "unit": "kg CO2eq"
+            "unit": "KGM"
         },
         "dpp:materialComposition": [
             {
@@ -299,7 +301,17 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
             "assetInformation": {
                 "assetKind": "Instance",
                 "globalAssetId": "urn:gtin:04219589148911:serial:SER12345"
-            }
+            },
+            "submodels": [
+                {
+                    "type": "ModelReference",
+                    "keys": [{ "type": "Submodel", "value": "https://admin-shell.io/idta/02006/1/0" }]
+                },
+                {
+                    "type": "ModelReference",
+                    "keys": [{ "type": "Submodel", "value": "https://admin-shell.io/idta/02004/1/0" }]
+                }
+            ]
         }
     ]
 }
@@ -320,7 +332,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
     "manufacturingDate": "2026-05-15T08:00:00Z",
     "carbonFootprint": {
         "value": 12.5,
-        "unit": "kg CO2eq"
+        "unit": "KGM"
     },
     "manufacturer": "MediCoinSwiss AG"
 }
