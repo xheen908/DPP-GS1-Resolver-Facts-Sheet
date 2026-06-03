@@ -128,36 +128,56 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "DigitalProductPassport"
     ],
     "issuer": "did:web:medicoinswiss.ch",
-    "validFrom": "2026-06-03T13:24:05.090Z",
+    "validFrom": "2026-06-03T23:17:09.673Z",
     "credentialSubject": {
         "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
+        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
         "dpp:batchNumber": "BATCH-2026-X1",
+        "dpp:hsCode": "90219090",
+        "dpp:originCountry": "CH",
+        "dpp:manuals": [
+            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
+            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+        ],
+        "dpp:expectedLifeSpan": {
+            "value": 10,
+            "unit": "ANN"
+        },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich",
+        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
-            "value": 12.5,
+            "value": 4.8,
             "unit": "KGM",
             "substance": "CO2eq"
         },
         "dpp:materialComposition": [
             {
-                "material": "Recycled Aluminum",
-                "percentage": 45
+                "material": "Medical Grade Titanium Alloy (Ti-6Al-4V ELI)",
+                "percentage": 82
             },
             {
-                "material": "Medical Grade Silicon",
-                "percentage": 55
+                "material": "Biocompatible Epoxy Resin",
+                "percentage": 12
+            },
+            {
+                "material": "Platinum-Iridium Lead Alloy",
+                "percentage": 4
+            },
+            {
+                "material": "Medical Grade Silicon & Electronics",
+                "percentage": 2
             }
         ],
         "dpp:supplyChainEvents": [
             {
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
-                "location": "Zurich Facility",
+                "location": "Zurich Cleanroom Facility",
                 "actor": "MediCoinSwiss AG"
             },
             {
@@ -175,10 +195,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         ],
         "mdr:deviceInformation": {
             "udiDi": "04219589148911",
-            "riskClass": "Class IIb",
+            "brandName": "CardiaLink",
+            "modelName": "Pro-V1",
+            "deviceType": "Active Implantable Medical Device (AIMD)",
+            "singleUseOnly": false,
+            "gudidRegistryUrl": "#",
+            "riskClass": "Class III",
             "sterilizationState": "STERILE_EO",
-            "intendedPurpose": "Implantable medical device for continuous monitoring.",
-            "notifiedBody": "CE 0123 (TÜV SÜD)"
+            "intendedPurpose": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+            "notifiedBody": "CE 0123 (TÜV SÜD Product Service GmbH)"
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
@@ -191,6 +216,14 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
             "status": "AUTHENTIC",
             "counter": 1
         }
+    },
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "eddsa-rdfc-2022",
+        "created": "2026-06-03T23:17:09.673Z",
+        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "zuLVd8fhTe3ybLfFmX8FwLRoPn2FzgwmmqmcfWW1aZ7UVv4dqFMndRDk37GuH4V1v5Ztq6H6nCpk18otB8Q18HCH"
     }
 }
 ```
@@ -220,36 +253,56 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "DigitalProductPassport"
     ],
     "issuer": "did:web:medicoinswiss.ch",
-    "validFrom": "2026-06-03T13:28:15.597Z",
+    "validFrom": "2026-06-03T23:17:14.352Z",
     "credentialSubject": {
         "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
+        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
         "dpp:batchNumber": "BATCH-2026-X1",
+        "dpp:hsCode": "90219090",
+        "dpp:originCountry": "CH",
+        "dpp:manuals": [
+            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
+            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+        ],
+        "dpp:expectedLifeSpan": {
+            "value": 10,
+            "unit": "ANN"
+        },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich",
+        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
-            "value": 12.5,
+            "value": 4.8,
             "unit": "KGM",
             "substance": "CO2eq"
         },
         "dpp:materialComposition": [
             {
-                "material": "Recycled Aluminum",
-                "percentage": 45
+                "material": "Medical Grade Titanium Alloy (Ti-6Al-4V ELI)",
+                "percentage": 82
             },
             {
-                "material": "Medical Grade Silicon",
-                "percentage": 55
+                "material": "Biocompatible Epoxy Resin",
+                "percentage": 12
+            },
+            {
+                "material": "Platinum-Iridium Lead Alloy",
+                "percentage": 4
+            },
+            {
+                "material": "Medical Grade Silicon & Electronics",
+                "percentage": 2
             }
         ],
         "dpp:supplyChainEvents": [
             {
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
-                "location": "Zurich Facility",
+                "location": "Zurich Cleanroom Facility",
                 "actor": "MediCoinSwiss AG"
             },
             {
@@ -267,10 +320,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         ],
         "mdr:deviceInformation": {
             "udiDi": "04219589148911",
-            "riskClass": "Class IIb",
+            "brandName": "CardiaLink",
+            "modelName": "Pro-V1",
+            "deviceType": "Active Implantable Medical Device (AIMD)",
+            "singleUseOnly": false,
+            "gudidRegistryUrl": "#",
+            "riskClass": "Class III",
             "sterilizationState": "STERILE_EO",
-            "intendedPurpose": "Implantable medical device for continuous monitoring.",
-            "notifiedBody": "CE 0123 (TÜV SÜD)"
+            "intendedPurpose": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+            "notifiedBody": "CE 0123 (TÜV SÜD Product Service GmbH)"
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
@@ -283,6 +341,14 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
             "status": "AUTHENTIC",
             "counter": 1
         }
+    },
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "eddsa-rdfc-2022",
+        "created": "2026-06-03T23:17:14.352Z",
+        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z5aarVxhBXW2NCU37gQxDhRXqFu9YotfNAS8WvUn86X3H5mKWj6hWB6z6Hju9ZxzhSmWjqYNYFoaXzngvGPQuZURr"
     }
 }
 ```
@@ -333,7 +399,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
     "batch": "BATCH-2026-X1",
     "manufacturingDate": "2026-05-15T08:00:00Z",
     "carbonFootprint": {
-        "value": 12.5,
+        "value": 4.8,
         "unit": "KGM",
         "substance": "CO2eq"
     },
