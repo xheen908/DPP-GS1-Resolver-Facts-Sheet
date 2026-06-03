@@ -140,7 +140,8 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 12.5,
-            "unit": "KGM"
+            "unit": "KGM",
+            "substance": "CO2eq"
         },
         "dpp:materialComposition": [
             {
@@ -231,7 +232,8 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 12.5,
-            "unit": "KGM"
+            "unit": "KGM",
+            "substance": "CO2eq"
         },
         "dpp:materialComposition": [
             {
@@ -332,7 +334,8 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
     "manufacturingDate": "2026-05-15T08:00:00Z",
     "carbonFootprint": {
         "value": 12.5,
-        "unit": "KGM"
+        "unit": "KGM",
+        "substance": "CO2eq"
     },
     "manufacturer": "MediCoinSwiss AG"
 }
