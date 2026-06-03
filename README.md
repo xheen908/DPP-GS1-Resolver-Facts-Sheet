@@ -24,7 +24,7 @@ Dieses System eliminiert diese Gefahren radikal durch eine **strikte, zustandslo
 Die Übersetzung komplexer juristischer Gesetzestexte in fehlerfreien Softwarecode ist die anspruchsvollste Disziplin der Softwareentwicklung. Dieses Projekt wurde streng nach dem Prinzip des **Compliance-Driven Development (CDD)** entwickelt. 
 
 **Referenz für regulatorische Präzision:** 
-Die in diesem Projekt angewandte Architektur und Test-Methodik entstammt der erfolgreichen Entwicklung einer deutschen **Tax-Engine (PAP2026)**. Bei diesem Vorläuferprojekt wurde der hochkomplexe Programmablaufplan des Bundesministeriums der Finanzen (BMF) für 2025/2026 vollständig in Code übersetzt. Eine engmaschige Test-Suite beweist dort, dass die Engine auf den Cent genau exakt jene Daten ausgibt, die die offiziellen Regierungs-Tabellen vorgeben. 
+Die in diesem Projekt angewandte Architektur und Test-Methodik entstammt der erfolgreichen Entwicklung einer deutschen **Tax-Engine (PAP2026)** ([Source Code Repository auf GitHub](https://github.com/xheen908/DRP2/tree/main/tax-engine-cpp)). Bei diesem Vorläuferprojekt wurde der hochkomplexe Programmablaufplan des Bundesministeriums der Finanzen (BMF) für 2025/2026 vollständig in Code übersetzt. Eine engmaschige Test-Suite beweist dort, dass die Engine auf den Cent genau exakt jene Daten ausgibt, die die offiziellen Regierungs-Tabellen vorgeben. 
 
 **Exakt dieselbe regulatorische und mathematische Präzision kommt hier für die EU-Verordnung (ESPR) zur Anwendung.** Die Software vertraut keinen Daten blind. Jede Information wird vor der Ausstellung des Passes durch ein rigoroses W3C-Schema geprüft. Diese Test-Suite ist das ultimative Sicherheitsnetz für das Management.
 
