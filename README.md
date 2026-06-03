@@ -93,6 +93,68 @@ Der DPP GS1 Resolver ist so konzipiert, dass er sich nahtlos in jede bestehende 
 
 ---
 
+## 🔄 Datenfluss: Wie Produktdaten in den Resolver gelangen
+
+Der Resolver besitzt eine dedizierte, gesicherte **Data Ingestion API**. Über diese API werden Produktdaten aus Ihrem ERP-System (SAP, Oracle, oder proprietär) einmalig oder ereignisgesteuert in den Resolver übertragen. Der Resolver speichert diese Daten **nicht dauerhaft** – er hält sie nur für die Laufzeit der Signierung und Auslieferung im Arbeitsspeicher.
+
+### Schritt 1: Produktdaten einliefern (ERP → Resolver)
+
+Ein einziger `POST`-Request aus Ihrem ERP-System überträgt die Produktdaten sicher an den Resolver:
+
+```http
+POST /v1/ingest
+Host: gs1-resolver.medicoinswiss.ch
+Authorization: Bearer <API_KEY>
+Content-Type: application/json
+
+{
+  "gtin": "04219589148911",
+  "serial": "SER12345",
+  "batch": "BATCH-2026-X1",
+  "manufacturingDate": "2026-05-15T08:00:00Z",
+  "manufacturingFacility": "Zurich Cleanroom Facility",
+  "carbonFootprint": { "value": 4.8, "unit": "KGM", "substance": "CO2eq" },
+  "riskClass": "Class III",
+  "economicOperator": {
+    "name": "MediCoinSwiss AG",
+    "vatID": "CHE-123.456.789",
+    "address": "Pharma Strasse 1, 8000 Zürich, CH"
+  }
+}
+```
+
+**Response (HTTP 201 Created):**
+```json
+{
+  "gs1_link": "https://gs1-resolver.medicoinswiss.ch/01/04219589148911/21/SER12345",
+  "qr_code_url": "https://gs1-resolver.medicoinswiss.ch/qr/04219589148911/SER12345",
+  "status": "READY",
+  "compliance_check": "PASSED"
+}
+```
+
+Der zurückgegebene `gs1_link` ist der einzige QR-Code / NFC-Link der auf das Produkt gedruckt oder im Chip gespeichert wird. Er ist ab diesem Moment für alle Anfragen (Behörden, Maschinen, Endkunden) auflösbar.
+
+### Schritt 2: Compliance-Firewall greift automatisch
+
+Fehlt ein gesetzlich vorgeschriebenes Feld (z.B. `carbonFootprint`), gibt der Resolver bereits beim Einliefern einen Fehler zurück — das Produkt erhält **keinen** GS1-Link:
+
+```json
+{
+  "status": "REJECTED",
+  "compliance_check": "FAILED",
+  "missing_fields": ["carbonFootprint", "economicOperator"],
+  "error": "HTTP 422 – Unprocessable Entity: Mandatory ESPR fields missing."
+}
+```
+
+**Das Resultat:** Es ist unmöglich, ein nicht-compliant-Produkt versehentlich in den Umlauf zu bringen.
+
+### Schritt 3: Auflösung durch beliebige Akteure (bereits dokumentiert oben ↑)
+
+Ab diesem Punkt funktioniert die Content Negotiation wie im Abschnitt `Integration & API` beschrieben.
+
+---
 ## 🚀 Integration & API
 
 Das System ist als geschlossene, hochskalierbare Black-Box-Architektur (Managed Service) konzipiert, um maximale Sicherheit und laufende Updates der EU-Regulatorik ohne Aufwand auf Kundenseite zu garantieren. 
