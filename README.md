@@ -57,7 +57,7 @@ The system resolves the problem of fragmented QR codes and barcodes. Exactly **o
 * **End Consumers (`Accept: text/html`):** Receive the data as clean JSON-LD directly rendered in the browser or are redirected to your company's localized consumer portal.
 
 ### 2. True White-Labeling
-The resolver acts as an invisible technological enabler. In the cryptographic signatures of the product passports, the official issuer appears **exclusively as your company** (e.g., `did:web:medicoinswiss.ch`), never the software vendor.
+The resolver acts as an invisible technological enabler. In the cryptographic signatures of the product passports, the official issuer appears **exclusively as your company** (e.g., `did:web:company.example.com`), never the software vendor.
 
 ### 3. Cryptography & Hardware Security
 - Verification of cryptographic NFC hardware chips (Proof of Authenticity).
@@ -117,7 +117,7 @@ A single `POST` request from your ERP transfers product data securely to the res
 
 ```http
 POST /v1/ingest
-Host: gs1-resolver.medicoinswiss.ch
+Host: gs1.company.example.com
 Authorization: Bearer <API_KEY>
 Content-Type: application/json
 
@@ -130,9 +130,9 @@ Content-Type: application/json
   "carbonFootprint": { "value": 4.8, "unit": "KGM", "substance": "CO2eq" },
   "riskClass": "Class III",
   "economicOperator": {
-    "name": "MediCoinSwiss AG",
+    "name": "Enterprise MedTech AG",
     "vatID": "CHE-123.456.789",
-    "address": "Pharma Strasse 1, 8000 Zürich, CH"
+    "address": "Industriestrasse 10, 8005 Zürich, CH"
   }
 }
 ```
@@ -140,8 +140,8 @@ Content-Type: application/json
 **Response (HTTP 201 Created):**
 ```json
 {
-  "gs1_link": "https://gs1-resolver.medicoinswiss.ch/01/04219589148911/21/SER12345",
-  "qr_code_url": "https://gs1-resolver.medicoinswiss.ch/qr/04219589148911/SER12345",
+  "gs1_link": "https://gs1.company.example.com/01/04219589148911/21/SER12345",
+  "qr_code_url": "https://gs1.company.example.com/qr/04219589148911/SER12345",
   "status": "READY",
   "compliance_check": "PASSED"
 }
@@ -183,7 +183,7 @@ The resolver supports both standard HTTP header content negotiation and intuitiv
 ### 1. Authorities & Auditors (W3C VC JSON-LD)
 Cryptographically signed format fulfilling EU ESPR & CEN/CENELEC JTC 24 specifications.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=vc
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=vc
 ```
 
 **Output:**
@@ -204,12 +204,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "VerifiableCredential",
         "DigitalProductPassport"
     ],
-    "issuer": "did:web:medicoinswiss.ch",
+    "issuer": "did:web:company.example.com",
     "validFrom": "2026-06-03T23:17:09.673Z",
     "credentialSubject": {
-        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "id": "https://company.example.com/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
-        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:name": "CardiaLink Pro (Wireless Cardiac Monitor)",
         "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
@@ -217,15 +217,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:hsCode": "90219090",
         "dpp:originCountry": "CH",
         "dpp:manuals": [
-            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
-            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+            "https://company.example.com/manuals/cardialink-pro-user-guide.pdf",
+            "https://company.example.com/manuals/cardialink-pro-surgeon-manual.pdf"
         ],
         "dpp:expectedLifeSpan": {
             "value": 10,
             "unit": "ANN"
         },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:manufacturingFacility": "Pharma Cleanroom Facility, Zurich (ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 4.8,
@@ -255,7 +255,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
                 "location": "Zurich Cleanroom Facility",
-                "actor": "MediCoinSwiss AG"
+                "actor": "Enterprise MedTech AG"
             },
             {
                 "type": "urn:epcglobal:cbv:bizstep:inspecting",
@@ -284,12 +284,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
-            "schema:name": "MediCoinSwiss AG",
+            "schema:name": "Enterprise MedTech AG",
             "schema:vatID": "CHE-123.456.789",
-            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+            "schema:address": "Industriestrasse 10, 8005 Zürich, CH"
         },
         "idpp:hardware": {
-            "chipType": "MediCoinSwiss Custom",
+            "chipType": "Hardware Secure Element (NFC Type 5)",
             "status": "AUTHENTIC",
             "counter": 1
         }
@@ -298,7 +298,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "type": "DataIntegrityProof",
         "cryptosuite": "eddsa-rdfc-2022",
         "created": "2026-06-03T23:17:09.673Z",
-        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "verificationMethod": "did:web:company.example.com#key-1",
         "proofPurpose": "assertionMethod",
         "proofValue": "zuLVd8fhTe3ybLfFmX8FwLRoPn2FzgwmmqmcfWW1aZ7UVv4dqFMndRDk37GuH4V1v5Ztq6H6nCpk18otB8Q18HCH"
     }
@@ -308,7 +308,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 2. End-Consumer Browser (Public JSON)
 Delivers clean JSON-LD object for consumer portals and mobile apps.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=public
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=public
 ```
 
 **Output:**
@@ -329,12 +329,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "VerifiableCredential",
         "DigitalProductPassport"
     ],
-    "issuer": "did:web:medicoinswiss.ch",
+    "issuer": "did:web:company.example.com",
     "validFrom": "2026-06-03T23:17:14.352Z",
     "credentialSubject": {
-        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "id": "https://company.example.com/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
-        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:name": "CardiaLink Pro (Wireless Cardiac Monitor)",
         "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
@@ -342,15 +342,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:hsCode": "90219090",
         "dpp:originCountry": "CH",
         "dpp:manuals": [
-            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
-            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+            "https://company.example.com/manuals/cardialink-pro-user-guide.pdf",
+            "https://company.example.com/manuals/cardialink-pro-surgeon-manual.pdf"
         ],
         "dpp:expectedLifeSpan": {
             "value": 10,
             "unit": "ANN"
         },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:manufacturingFacility": "Pharma Cleanroom Facility, Zurich (ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 4.8,
@@ -380,7 +380,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
                 "location": "Zurich Cleanroom Facility",
-                "actor": "MediCoinSwiss AG"
+                "actor": "Enterprise MedTech AG"
             },
             {
                 "type": "urn:epcglobal:cbv:bizstep:inspecting",
@@ -409,12 +409,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
-            "schema:name": "MediCoinSwiss AG",
+            "schema:name": "Enterprise MedTech AG",
             "schema:vatID": "CHE-123.456.789",
-            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+            "schema:address": "Industriestrasse 10, 8005 Zürich, CH"
         },
         "idpp:hardware": {
-            "chipType": "MediCoinSwiss Custom",
+            "chipType": "Hardware Secure Element (NFC Type 5)",
             "status": "AUTHENTIC",
             "counter": 1
         }
@@ -423,7 +423,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "type": "DataIntegrityProof",
         "cryptosuite": "eddsa-rdfc-2022",
         "created": "2026-06-03T23:17:14.352Z",
-        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "verificationMethod": "did:web:company.example.com#key-1",
         "proofPurpose": "assertionMethod",
         "proofValue": "z5aarVxhBXW2NCU37gQxDhRXqFu9YotfNAS8WvUn86X3H5mKWj6hWB6z6Hju9ZxzhSmWjqYNYFoaXzngvGPQuZURr"
     }
@@ -433,7 +433,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 3. Industry 4.0 Machinery (AAS)
 Asset Administration Shell encapsulation for automated industrial systems and digital twins.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=aas
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=aas
 ```
 
 **Output:**
@@ -441,7 +441,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 {
     "assetAdministrationShells": [
         {
-            "id": "https://medicoinswiss.ch/dpp/04219589148911/SER12345",
+            "id": "https://company.example.com/dpp/04219589148911/SER12345",
             "idShort": "AAS_04219589148911_SER12345",
             "assetInformation": {
                 "assetKind": "Instance",
@@ -465,7 +465,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 4. SAP & Enterprise ERP Systems (Flat JSON)
 Normalized, decoupled master attributes for streamlined ingestion into enterprise software.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=erp
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=erp
 ```
 
 **Output:**
@@ -480,7 +480,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "unit": "KGM",
         "substance": "CO2eq"
     },
-    "manufacturer": "MediCoinSwiss AG"
+    "manufacturer": "Enterprise MedTech AG"
 }
 ```
 
@@ -556,7 +556,7 @@ Das System löst das Problem fragmentierter QR-Codes und Barcodes. Es wird **gen
 * **Endkunden (`Accept: text/html`):** Erhalten die Daten als sauberes JSON-LD direkt im Browser oder werden zielgenau auf das Marketing-Frontend Ihres Unternehmens weitergeleitet.
 
 ### 2. Echtes White-Labeling
-Der Resolver arbeitet als unsichtbarer technologischer Enabler. Als offizieller Aussteller (Issuer) in den kryptografischen Signaturen der Produktpässe erscheint **ausschließlich Ihr Unternehmen** (z.B. `did:web:medicoinswiss.ch`), nicht der Software-Lieferant.
+Der Resolver arbeitet als unsichtbarer technologischer Enabler. Als offizieller Aussteller (Issuer) in den kryptografischen Signaturen der Produktpässe erscheint **ausschließlich Ihr Unternehmen** (z.B. `did:web:company.example.com`), nicht der Software-Lieferant.
 
 ### 3. Kryptografie & Hardware-Sicherheit
 - Verifizierung von kryptografischen NFC-Hardware-Chips (Proof of Authenticity).
@@ -616,7 +616,7 @@ Ein einziger `POST`-Request aus Ihrem ERP-System überträgt die Produktdaten si
 
 ```http
 POST /v1/ingest
-Host: gs1-resolver.medicoinswiss.ch
+Host: gs1.company.example.com
 Authorization: Bearer <API_KEY>
 Content-Type: application/json
 
@@ -629,9 +629,9 @@ Content-Type: application/json
   "carbonFootprint": { "value": 4.8, "unit": "KGM", "substance": "CO2eq" },
   "riskClass": "Class III",
   "economicOperator": {
-    "name": "MediCoinSwiss AG",
+    "name": "Enterprise MedTech AG",
     "vatID": "CHE-123.456.789",
-    "address": "Pharma Strasse 1, 8000 Zürich, CH"
+    "address": "Industriestrasse 10, 8005 Zürich, CH"
   }
 }
 ```
@@ -639,8 +639,8 @@ Content-Type: application/json
 **Response (HTTP 201 Created):**
 ```json
 {
-  "gs1_link": "https://gs1-resolver.medicoinswiss.ch/01/04219589148911/21/SER12345",
-  "qr_code_url": "https://gs1-resolver.medicoinswiss.ch/qr/04219589148911/SER12345",
+  "gs1_link": "https://gs1.company.example.com/01/04219589148911/21/SER12345",
+  "qr_code_url": "https://gs1.company.example.com/qr/04219589148911/SER12345",
   "status": "READY",
   "compliance_check": "PASSED"
 }
@@ -682,7 +682,7 @@ Der Resolver unterstützt sowohl klassische Content-Negotiation via HTTP-Header 
 ### 1. Behörden & Auditoren (W3C VC JSON-LD)
 Dieses Format ist kryptografisch signiert und erfüllt die strengen EU ESPR & JTC 24 Auflagen.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=vc
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=vc
 ```
 
 **Output:**
@@ -703,12 +703,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "VerifiableCredential",
         "DigitalProductPassport"
     ],
-    "issuer": "did:web:medicoinswiss.ch",
+    "issuer": "did:web:company.example.com",
     "validFrom": "2026-06-03T23:17:09.673Z",
     "credentialSubject": {
-        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "id": "https://company.example.com/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
-        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:name": "CardiaLink Pro (Wireless Cardiac Monitor)",
         "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
@@ -716,15 +716,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:hsCode": "90219090",
         "dpp:originCountry": "CH",
         "dpp:manuals": [
-            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
-            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+            "https://company.example.com/manuals/cardialink-pro-user-guide.pdf",
+            "https://company.example.com/manuals/cardialink-pro-surgeon-manual.pdf"
         ],
         "dpp:expectedLifeSpan": {
             "value": 10,
             "unit": "ANN"
         },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:manufacturingFacility": "Pharma Cleanroom Facility, Zurich (ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 4.8,
@@ -754,7 +754,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
                 "location": "Zurich Cleanroom Facility",
-                "actor": "MediCoinSwiss AG"
+                "actor": "Enterprise MedTech AG"
             },
             {
                 "type": "urn:epcglobal:cbv:bizstep:inspecting",
@@ -783,12 +783,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
-            "schema:name": "MediCoinSwiss AG",
+            "schema:name": "Enterprise MedTech AG",
             "schema:vatID": "CHE-123.456.789",
-            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+            "schema:address": "Industriestrasse 10, 8005 Zürich, CH"
         },
         "idpp:hardware": {
-            "chipType": "MediCoinSwiss Custom",
+            "chipType": "Hardware Secure Element (NFC Type 5)",
             "status": "AUTHENTIC",
             "counter": 1
         }
@@ -797,7 +797,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "type": "DataIntegrityProof",
         "cryptosuite": "eddsa-rdfc-2022",
         "created": "2026-06-03T23:17:09.673Z",
-        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "verificationMethod": "did:web:company.example.com#key-1",
         "proofPurpose": "assertionMethod",
         "proofValue": "zuLVd8fhTe3ybLfFmX8FwLRoPn2FzgwmmqmcfWW1aZ7UVv4dqFMndRDk37GuH4V1v5Ztq6H6nCpk18otB8Q18HCH"
     }
@@ -807,7 +807,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 2. Endkunden Browser (Public JSON)
 Liefert das rohe JSON-LD Datenobjekt für Endkunden-Portale und Consumer-Apps.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=public
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=public
 ```
 
 **Output:**
@@ -828,12 +828,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "VerifiableCredential",
         "DigitalProductPassport"
     ],
-    "issuer": "did:web:medicoinswiss.ch",
+    "issuer": "did:web:company.example.com",
     "validFrom": "2026-06-03T23:17:14.352Z",
     "credentialSubject": {
-        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "id": "https://company.example.com/dpp/01/04219589148911/21/SER12345",
         "type": "Product",
-        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:name": "CardiaLink Pro (Wireless Cardiac Monitor)",
         "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
         "dpp:modelIdentifier": "04219589148911",
         "dpp:instanceIdentifier": "SER12345",
@@ -841,15 +841,15 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "dpp:hsCode": "90219090",
         "dpp:originCountry": "CH",
         "dpp:manuals": [
-            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
-            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+            "https://company.example.com/manuals/cardialink-pro-user-guide.pdf",
+            "https://company.example.com/manuals/cardialink-pro-surgeon-manual.pdf"
         ],
         "dpp:expectedLifeSpan": {
             "value": 10,
             "unit": "ANN"
         },
         "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
-        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:manufacturingFacility": "Pharma Cleanroom Facility, Zurich (ISO Class 5)",
         "dpp:substancesOfConcern": false,
         "dpp:carbonFootprint": {
             "value": 4.8,
@@ -879,7 +879,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
                 "type": "urn:epcglobal:cbv:bizstep:commissioning",
                 "date": "2026-05-15T08:00:00Z",
                 "location": "Zurich Cleanroom Facility",
-                "actor": "MediCoinSwiss AG"
+                "actor": "Enterprise MedTech AG"
             },
             {
                 "type": "urn:epcglobal:cbv:bizstep:inspecting",
@@ -908,12 +908,12 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         },
         "dpp:economicOperator": {
             "type": "Manufacturer",
-            "schema:name": "MediCoinSwiss AG",
+            "schema:name": "Enterprise MedTech AG",
             "schema:vatID": "CHE-123.456.789",
-            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+            "schema:address": "Industriestrasse 10, 8005 Zürich, CH"
         },
         "idpp:hardware": {
-            "chipType": "MediCoinSwiss Custom",
+            "chipType": "Hardware Secure Element (NFC Type 5)",
             "status": "AUTHENTIC",
             "counter": 1
         }
@@ -922,7 +922,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "type": "DataIntegrityProof",
         "cryptosuite": "eddsa-rdfc-2022",
         "created": "2026-06-03T23:17:14.352Z",
-        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "verificationMethod": "did:web:company.example.com#key-1",
         "proofPurpose": "assertionMethod",
         "proofValue": "z5aarVxhBXW2NCU37gQxDhRXqFu9YotfNAS8WvUn86X3H5mKWj6hWB6z6Hju9ZxzhSmWjqYNYFoaXzngvGPQuZURr"
     }
@@ -932,7 +932,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 3. Industrie 4.0 Maschinen (AAS)
 Die Asset Administration Shell Kapselung für Industrieanlagen und digitale Zwillinge.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=aas
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=aas
 ```
 
 **Output:**
@@ -940,7 +940,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 {
     "assetAdministrationShells": [
         {
-            "id": "https://medicoinswiss.ch/dpp/04219589148911/SER12345",
+            "id": "https://company.example.com/dpp/04219589148911/SER12345",
             "idShort": "AAS_04219589148911_SER12345",
             "assetInformation": {
                 "assetKind": "Instance",
@@ -964,7 +964,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
 ### 4. SAP & ERP Systeme (Flaches JSON)
 Die flachen, entkoppelten Stammdaten für den einfachen Import in Unternehmenssoftware.
 ```text
-https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=erp
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?format=erp
 ```
 
 **Output:**
@@ -979,7 +979,7 @@ https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?
         "unit": "KGM",
         "substance": "CO2eq"
     },
-    "manufacturer": "MediCoinSwiss AG"
+    "manufacturer": "Enterprise MedTech AG"
 }
 ```
 
