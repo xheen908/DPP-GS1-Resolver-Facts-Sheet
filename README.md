@@ -1,5 +1,518 @@
 # DPP GS1 Resolver
 
+<div align="center">
+
+**Enterprise-Ready GS1 Digital Link Resolver with Native ESPR & JTC 24 Compliance**  
+*Enterprise-Ready GS1 Digital Link Resolver mit nativer ESPR & JTC 24 Compliance*
+
+[🇬🇧 English Version](#-english) &nbsp;•&nbsp; [🇩🇪 Deutsche Version](#-deutsch)
+
+</div>
+
+---
+
+<a name="-english"></a>
+# 🇬🇧 English
+
+**Enterprise-Ready GS1 Digital Link Resolver with Native ESPR & JTC 24 Compliance.**
+
+This repository contains the core infrastructure of the DPP GS1 Resolver. Specifically engineered for highly regulated industries (e.g., Pharmaceuticals, Medical Devices), it guarantees uncompromising adherence to current and upcoming EU Digital Product Passport (DPP) regulations **by design**.
+
+---
+
+## 🛡️ Executive Summary for CEO & CTO: Eliminating Compliance Risks
+
+> *"Since the introduction of ESPR, a medical device with an incomplete DPP cannot legally be distributed in the EU. This resolver makes it technically impossible to make this mistake."*
+
+The single greatest strategic and financial hazard when implementing the Digital Product Passport (ESPR) is faulty, inconsistent, or outdated product data. During audits by EU market surveillance authorities, such data inconsistencies can trigger severe financial penalties, reputational damage, or immediate sales bans.
+
+This system radically eliminates these risks through a **strict, stateless architecture**:
+
+1. **Zero Redundant Data Storage (Zero-DB):** The system stores no product data permanently. It operates as an intelligent, cryptographic pass-through resolver. Data sovereignty remains strictly within your existing master systems (ERP, SAP, PLM). The resolver pulls this data in real time, signs it cryptographically, and serves it.  
+   **Result:** Zero desynchronized databases, zero GDPR risks from orphaned records, and zero single points of failure in data storage.
+2. **Hard-Blocking Compliance Firewall:** The system features an integrated, unbypassable validation engine for the CEN/CENELEC JTC 24 standard. If the source data lacks any EU legally mandated field (e.g., `carbonFootprint`), an immediate **HTTP 422 Hard-Block** is triggered.  
+   **Result:** It is technically impossible to accidentally issue an incomplete or non-compliant product passport to an auditor, authority, or customer.
+
+---
+
+## ⚖️ Proof of Competence: Compliance-Driven Development
+
+Translating complex legal statutory frameworks into defect-free software code is the most demanding discipline in software engineering. This project was developed strictly under the principle of **Compliance-Driven Development (CDD)**.
+
+**Track Record of Regulatory Precision:**  
+The architecture and testing methodology applied here originate from the successful development of a German **Tax-Engine (PAP2026)** ([Source Code Repository on GitHub](https://github.com/xheen908/DRP2/tree/main/tax-engine-cpp)). In that predecessor project, the highly complex statutory algorithm of the German Federal Ministry of Finance (BMF) for 2025/2026 was fully translated into code. A dense test suite proves that the engine produces calculations accurate to the exact cent matching official government calculation tables.
+
+**The exact same regulatory and mathematical precision is applied here for the EU Ecodesign Regulation (ESPR).** The software never trusts incoming data blindly. Every piece of information is validated against a rigorous W3C schema prior to issuing the passport. This automated test suite provides the ultimate safety net for executive management.
+
+---
+
+## 🏛️ Architecture & Standards
+
+### 1. GS1 Digital Link & Content Negotiation (Single Source of Truth)
+The system resolves the problem of fragmented QR codes and barcodes. Exactly **one single GS1 Digital Link** is generated per product. In milliseconds, the resolver detects who scans the link and dynamically serves the legally and technically appropriate format:
+
+* **Authorities & Auditors (`Accept: application/ld+json`):** Receive the highly secure, cryptographically signed W3C Verifiable Credential passport compliant with CEN/CENELEC JTC 24.
+* **Industry 4.0 & Digital Twin (`Accept: application/asset-administration-shell+json`):** Receive the standardized *Asset Administration Shell* (AAS) for automated machine-to-machine processing.
+* **ERP Systems & SAP (`Accept: application/json`):** Receive pure, flat master data for smooth software ingestion.
+* **End Consumers (`Accept: text/html`):** Receive the data as clean JSON-LD directly rendered in the browser or are redirected to your company's localized consumer portal.
+
+### 2. True White-Labeling
+The resolver acts as an invisible technological enabler. In the cryptographic signatures of the product passports, the official issuer appears **exclusively as your company** (e.g., `did:web:medicoinswiss.ch`), never the software vendor.
+
+### 3. Cryptography & Hardware Security
+- Verification of cryptographic NFC hardware chips (Proof of Authenticity).
+- Native support for Enterprise Key Management Services (KMS / HSM).
+
+---
+
+## 🧪 Testing & Verification
+
+The system is validated by end-to-end (E2E) test suites running in an isolated Docker environment. This test suite mathematically and reproducibly verifies the functionality of the Compliance Firewall at all times.
+
+Excerpt from automated live test execution:
+```text
+✓ E2E: Delivers complete, fully valid JTC 24 / ESPR passport (HTTP 200)
+✓ E2E: Blocks live request when mandatory batch number is missing (HTTP 422)
+✓ E2E: Blocks live request when manufacturing date is missing (HTTP 422)
+✓ E2E: Blocks live request when carbon footprint is missing (HTTP 422)
+✓ E2E: Blocks live request when economic operator is missing (HTTP 422)
+✓ E2E: (Content Negotiation): Delivers Asset Administration Shell (AAS) format
+✓ E2E: (Content Negotiation): Delivers flat ERP JSON
+```
+
+---
+
+## 🏥 Scalability for Medical Devices & "Delegated Acts"
+
+The EU ESPR framework sets only the foundational baseline. Specialized verticals—particularly the **medical sector (Pharma & Medical Technology)**—are governed by additional EU "Delegated Acts" and the EU-MDR (Medical Device Regulation), imposing strictly monitored, dynamically evolving data requirements (e.g., package leaflets / IFUs, toxicological reports, SVHC thresholds).
+
+**This is where the stateless architecture demonstrates its greatest advantage:**  
+Because the resolver maintains *no* proprietary product database, it is completely immune to legislative changes. When the EU introduces new mandatory fields for medical devices tomorrow, they only need to be populated in your existing ERP/PLM. The resolver captures these new fields in real time and automatically incorporates them into the cryptographic product passport.
+
+**Extensibility (The Final 5% to Full Production):**  
+The existing infrastructure validates the core architecture and W3C schemas. For full production rollout, the following modules plug seamlessly into this resolver:
+* **W3C Cryptographic Proofs:** Automated signing of JSON-LD using URDNA2015 and enterprise hardware KMS.
+* **CSW-CERTEX Interface:** Direct connectivity to the "EU Customs Single Window" for automated customs clearance.
+* **Ecodesign Extensions:** Standardized integration of `dpp:manuals` (Safety Data Sheets / IFUs), `dpp:endOfLifeInformation` (Recycling instructions), and `dpp:spareParts`.
+
+---
+
+## 🔌 Architectural Agility & Data Integration
+
+The DPP GS1 Resolver is designed to integrate seamlessly into any enterprise infrastructure—regardless of existing IT philosophies. The stateless design provides maximum flexibility for data ingestion:
+
+1. **Live-API (Real-Time Pull):** The premier integration pattern. The resolver queries required product passport data within milliseconds via internal, secured REST or GraphQL APIs directly from your ERP/PLM.
+2. **Event-Driven Push (Message Queues):** Instead of polling, your ERP publishes a lightweight event to a message broker (e.g., Apache Kafka, RabbitMQ) or a secure data lake whenever a unit leaves manufacturing. The resolver consumes this buffer asynchronously.
+3. **Asynchronous Batch Export:** For maximum air-gapped security (e.g., strictly isolated core ERP systems), the system can be fed via automated daily CSV/XML exports loaded into an isolated buffer database, leaving core enterprise systems completely untouched.
+
+---
+
+## 🔄 Data Flow: How Product Data Enters the Resolver
+
+The resolver features a dedicated, authenticated **Data Ingestion API**. Through this endpoint, product records from your ERP system (SAP, Oracle, or proprietary) are submitted once or event-driven into the resolver. The resolver **does not store this data permanently**—it holds it in volatile memory strictly for verification, signing, and dispatching.
+
+### Step 1: Submit Product Data (ERP → Resolver)
+
+A single `POST` request from your ERP transfers product data securely to the resolver:
+
+```http
+POST /v1/ingest
+Host: gs1-resolver.medicoinswiss.ch
+Authorization: Bearer <API_KEY>
+Content-Type: application/json
+
+{
+  "gtin": "04219589148911",
+  "serial": "SER12345",
+  "batch": "BATCH-2026-X1",
+  "manufacturingDate": "2026-05-15T08:00:00Z",
+  "manufacturingFacility": "Zurich Cleanroom Facility",
+  "carbonFootprint": { "value": 4.8, "unit": "KGM", "substance": "CO2eq" },
+  "riskClass": "Class III",
+  "economicOperator": {
+    "name": "MediCoinSwiss AG",
+    "vatID": "CHE-123.456.789",
+    "address": "Pharma Strasse 1, 8000 Zürich, CH"
+  }
+}
+```
+
+**Response (HTTP 201 Created):**
+```json
+{
+  "gs1_link": "https://gs1-resolver.medicoinswiss.ch/01/04219589148911/21/SER12345",
+  "qr_code_url": "https://gs1-resolver.medicoinswiss.ch/qr/04219589148911/SER12345",
+  "status": "READY",
+  "compliance_check": "PASSED"
+}
+```
+
+The returned `gs1_link` is the single QR-code / NFC URL encoded onto the physical product. From this moment onward, it can be resolved by all stakeholders (auditors, machines, consumers).
+
+### Step 2: Automated Compliance Firewall Enforcement
+
+If a legally required field is missing (e.g., `carbonFootprint`), the resolver immediately rejects ingestion—the product receives **no** GS1 Digital Link:
+
+```json
+{
+  "status": "REJECTED",
+  "compliance_check": "FAILED",
+  "missing_fields": ["carbonFootprint", "economicOperator"],
+  "error": "HTTP 422 – Unprocessable Entity: Mandatory ESPR fields missing."
+}
+```
+
+**Result:** It is impossible to release a non-compliant product into circulation.
+
+### Step 3: Stakeholder Resolution via Content Negotiation
+
+Resolution is handled dynamically via Content Negotiation as documented in the `Integration & API` section.
+
+---
+
+## 🚀 Integration & API
+
+The system is architected as a managed, highly scalable service to guarantee maximum security and continuous alignment with evolving EU regulations with zero customer overhead.
+
+Integration into existing ERP systems is achieved via secured REST interfaces. For global end-user access, a distributed high-availability endpoint executes content negotiation in single-digit milliseconds.
+
+**Sample Endpoints (Production Simulation):**
+
+The resolver supports both standard HTTP header content negotiation and intuitive query parameters for testing and legacy integration.
+
+### 1. Authorities & Auditors (W3C VC JSON-LD)
+Cryptographically signed format fulfilling EU ESPR & CEN/CENELEC JTC 24 specifications.
+```text
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=vc
+```
+
+**Output:**
+```json
+{
+    "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://vocabulary.uncefact.org/untp/v1",
+        {
+            "schema": "http://schema.org/",
+            "dpp": "https://ec.europa.eu/espr/dpp/v1#",
+            "mdr": "https://ec.europa.eu/mdr/v1#",
+            "idpp": "https://v-ledger.com/voc/"
+        }
+    ],
+    "id": "urn:dpp:gtin:04219589148911:serial:SER12345:v1",
+    "type": [
+        "VerifiableCredential",
+        "DigitalProductPassport"
+    ],
+    "issuer": "did:web:medicoinswiss.ch",
+    "validFrom": "2026-06-03T23:17:09.673Z",
+    "credentialSubject": {
+        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "type": "Product",
+        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+        "dpp:modelIdentifier": "04219589148911",
+        "dpp:instanceIdentifier": "SER12345",
+        "dpp:batchNumber": "BATCH-2026-X1",
+        "dpp:hsCode": "90219090",
+        "dpp:originCountry": "CH",
+        "dpp:manuals": [
+            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
+            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+        ],
+        "dpp:expectedLifeSpan": {
+            "value": 10,
+            "unit": "ANN"
+        },
+        "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
+        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:substancesOfConcern": false,
+        "dpp:carbonFootprint": {
+            "value": 4.8,
+            "unit": "KGM",
+            "substance": "CO2eq"
+        },
+        "dpp:materialComposition": [
+            {
+                "material": "Medical Grade Titanium Alloy (Ti-6Al-4V ELI)",
+                "percentage": 82
+            },
+            {
+                "material": "Biocompatible Epoxy Resin",
+                "percentage": 12
+            },
+            {
+                "material": "Platinum-Iridium Lead Alloy",
+                "percentage": 4
+            },
+            {
+                "material": "Medical Grade Silicon & Electronics",
+                "percentage": 2
+            }
+        ],
+        "dpp:supplyChainEvents": [
+            {
+                "type": "urn:epcglobal:cbv:bizstep:commissioning",
+                "date": "2026-05-15T08:00:00Z",
+                "location": "Zurich Cleanroom Facility",
+                "actor": "MediCoinSwiss AG"
+            },
+            {
+                "type": "urn:epcglobal:cbv:bizstep:inspecting",
+                "date": "2026-05-16T10:00:00Z",
+                "location": "Zurich QA Lab",
+                "actor": "SwissMedic"
+            },
+            {
+                "type": "urn:epcglobal:cbv:bizstep:shipping",
+                "date": "2026-05-18T14:30:00Z",
+                "location": "Basel Distribution Center",
+                "actor": "SwissPost Logistics"
+            }
+        ],
+        "mdr:deviceInformation": {
+            "udiDi": "04219589148911",
+            "brandName": "CardiaLink",
+            "modelName": "Pro-V1",
+            "deviceType": "Active Implantable Medical Device (AIMD)",
+            "singleUseOnly": false,
+            "gudidRegistryUrl": "#",
+            "riskClass": "Class III",
+            "sterilizationState": "STERILE_EO",
+            "intendedPurpose": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+            "notifiedBody": "CE 0123 (TÜV SÜD Product Service GmbH)"
+        },
+        "dpp:economicOperator": {
+            "type": "Manufacturer",
+            "schema:name": "MediCoinSwiss AG",
+            "schema:vatID": "CHE-123.456.789",
+            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+        },
+        "idpp:hardware": {
+            "chipType": "MediCoinSwiss Custom",
+            "status": "AUTHENTIC",
+            "counter": 1
+        }
+    },
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "eddsa-rdfc-2022",
+        "created": "2026-06-03T23:17:09.673Z",
+        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "zuLVd8fhTe3ybLfFmX8FwLRoPn2FzgwmmqmcfWW1aZ7UVv4dqFMndRDk37GuH4V1v5Ztq6H6nCpk18otB8Q18HCH"
+    }
+}
+```
+
+### 2. End-Consumer Browser (Public JSON)
+Delivers clean JSON-LD object for consumer portals and mobile apps.
+```text
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=public
+```
+
+**Output:**
+```json
+{
+    "@context": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://vocabulary.uncefact.org/untp/v1",
+        {
+            "schema": "http://schema.org/",
+            "dpp": "https://ec.europa.eu/espr/dpp/v1#",
+            "mdr": "https://ec.europa.eu/mdr/v1#",
+            "idpp": "https://v-ledger.com/voc/"
+        }
+    ],
+    "id": "urn:dpp:gtin:04219589148911:serial:SER12345:v1",
+    "type": [
+        "VerifiableCredential",
+        "DigitalProductPassport"
+    ],
+    "issuer": "did:web:medicoinswiss.ch",
+    "validFrom": "2026-06-03T23:17:14.352Z",
+    "credentialSubject": {
+        "id": "https://medicoinswiss.ch/dpp/01/04219589148911/21/SER12345",
+        "type": "Product",
+        "schema:name": "MediCoin CardiaLink Pro (Wireless Cardiac Monitor)",
+        "schema:description": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+        "dpp:modelIdentifier": "04219589148911",
+        "dpp:instanceIdentifier": "SER12345",
+        "dpp:batchNumber": "BATCH-2026-X1",
+        "dpp:hsCode": "90219090",
+        "dpp:originCountry": "CH",
+        "dpp:manuals": [
+            "https://medicoinswiss.ch/manuals/cardialink-pro-user-guide.pdf",
+            "https://medicoinswiss.ch/manuals/cardialink-pro-surgeon-manual.pdf"
+        ],
+        "dpp:expectedLifeSpan": {
+            "value": 10,
+            "unit": "ANN"
+        },
+        "dpp:manufacturingDate": "2026-05-15T08:00:00Z",
+        "dpp:manufacturingFacility": "MediCoinSwiss Pharma Facility, Zurich (Cleanroom ISO Class 5)",
+        "dpp:substancesOfConcern": false,
+        "dpp:carbonFootprint": {
+            "value": 4.8,
+            "unit": "KGM",
+            "substance": "CO2eq"
+        },
+        "dpp:materialComposition": [
+            {
+                "material": "Medical Grade Titanium Alloy (Ti-6Al-4V ELI)",
+                "percentage": 82
+            },
+            {
+                "material": "Biocompatible Epoxy Resin",
+                "percentage": 12
+            },
+            {
+                "material": "Platinum-Iridium Lead Alloy",
+                "percentage": 4
+            },
+            {
+                "material": "Medical Grade Silicon & Electronics",
+                "percentage": 2
+            }
+        ],
+        "dpp:supplyChainEvents": [
+            {
+                "type": "urn:epcglobal:cbv:bizstep:commissioning",
+                "date": "2026-05-15T08:00:00Z",
+                "location": "Zurich Cleanroom Facility",
+                "actor": "MediCoinSwiss AG"
+            },
+            {
+                "type": "urn:epcglobal:cbv:bizstep:inspecting",
+                "date": "2026-05-16T10:00:00Z",
+                "location": "Zurich QA Lab",
+                "actor": "SwissMedic"
+            },
+            {
+                "type": "urn:epcglobal:cbv:bizstep:shipping",
+                "date": "2026-05-18T14:30:00Z",
+                "location": "Basel Distribution Center",
+                "actor": "SwissPost Logistics"
+            }
+        ],
+        "mdr:deviceInformation": {
+            "udiDi": "04219589148911",
+            "brandName": "CardiaLink",
+            "modelName": "Pro-V1",
+            "deviceType": "Active Implantable Medical Device (AIMD)",
+            "singleUseOnly": false,
+            "gudidRegistryUrl": "#",
+            "riskClass": "Class III",
+            "sterilizationState": "STERILE_EO",
+            "intendedPurpose": "Active implantable medical device for continuous long-term monitoring of cardiac arrhythmia and remote patient alert triggering.",
+            "notifiedBody": "CE 0123 (TÜV SÜD Product Service GmbH)"
+        },
+        "dpp:economicOperator": {
+            "type": "Manufacturer",
+            "schema:name": "MediCoinSwiss AG",
+            "schema:vatID": "CHE-123.456.789",
+            "schema:address": "Pharma Strasse 1, 8000 Zürich, CH"
+        },
+        "idpp:hardware": {
+            "chipType": "MediCoinSwiss Custom",
+            "status": "AUTHENTIC",
+            "counter": 1
+        }
+    },
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "eddsa-rdfc-2022",
+        "created": "2026-06-03T23:17:14.352Z",
+        "verificationMethod": "did:web:medicoinswiss.ch#key-1",
+        "proofPurpose": "assertionMethod",
+        "proofValue": "z5aarVxhBXW2NCU37gQxDhRXqFu9YotfNAS8WvUn86X3H5mKWj6hWB6z6Hju9ZxzhSmWjqYNYFoaXzngvGPQuZURr"
+    }
+}
+```
+
+### 3. Industry 4.0 Machinery (AAS)
+Asset Administration Shell encapsulation for automated industrial systems and digital twins.
+```text
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=aas
+```
+
+**Output:**
+```json
+{
+    "assetAdministrationShells": [
+        {
+            "id": "https://medicoinswiss.ch/dpp/04219589148911/SER12345",
+            "idShort": "AAS_04219589148911_SER12345",
+            "assetInformation": {
+                "assetKind": "Instance",
+                "globalAssetId": "urn:gtin:04219589148911:serial:SER12345"
+            },
+            "submodels": [
+                {
+                    "type": "ModelReference",
+                    "keys": [{ "type": "Submodel", "value": "https://admin-shell.io/idta/02006/1/0" }]
+                },
+                {
+                    "type": "ModelReference",
+                    "keys": [{ "type": "Submodel", "value": "https://admin-shell.io/idta/02004/1/0" }]
+                }
+            ]
+        }
+    ]
+}
+```
+
+### 4. SAP & Enterprise ERP Systems (Flat JSON)
+Normalized, decoupled master attributes for streamlined ingestion into enterprise software.
+```text
+https://gs1-resolver-demo.v-ledger.com/v1/resolve/01/04219589148911/21/SER12345?test=medicoinswiss&format=erp
+```
+
+**Output:**
+```json
+{
+    "gtin": "04219589148911",
+    "serial": "SER12345",
+    "batch": "BATCH-2026-X1",
+    "manufacturingDate": "2026-05-15T08:00:00Z",
+    "carbonFootprint": {
+        "value": 4.8,
+        "unit": "KGM",
+        "substance": "CO2eq"
+    },
+    "manufacturer": "MediCoinSwiss AG"
+}
+```
+
+---
+
+## 📅 Deployment Timeline (Target)
+
+| Phase | Scope | Duration |
+|---|---|---|
+| **Phase 1** | Define ERP integration: Data interfaces, schema mapping, authentication | Week 1–2 |
+| **Phase 2** | Infrastructure integration & E2E testing, Compliance Firewall calibration | Week 3–6 |
+| **Phase 3** | Staging → Production cutover, documentation handover & observability setup | Week 7–8 |
+
+**Total Duration: ~8 weeks** to a fully validated, production-ready GS1 Resolver.
+
+*Timeline assumes required ERP access or defined data interfaces are provided during Phase 1.*
+
+---
+
+## ⚠️ Namespace Convention Note (Transparency)
+
+The `dpp:` namespace prefix (`https://ec.europa.eu/espr/dpp/v1#`) employed in this resolver represents the established consensus established by the CoE-DPP, TNO, and CIRPASS-2 reference architectures.
+
+While the European Commission has formally enacted the ESPR regulation legislatively, the associated RDF/JSON-LD vocabulary at this official URI has not yet been published in its final revision. This gap between the legislative timeline and technical vocabulary publication affects **all** current DPP initiatives globally—there is currently no alternative compliant scheme.
+
+Once the EU Commission finalizes and serves the official vocabulary, adapting this resolver is a **single-line configuration update**—without any disruption to the underlying architecture or live production data.
+
+---
+
+<a name="-deutsch"></a>
+# 🇩🇪 Deutsch
+
 **Enterprise-Ready GS1 Digital Link Resolver mit nativer ESPR & JTC 24 Compliance.**
 
 Dieses Repository enthält die Kern-Infrastruktur des DPP GS1 Resolvers. Er wurde explizit für hochregulierte Industrien (z.B. Pharma, Medizintechnik) entwickelt und garantiert **by Design** die kompromisslose Einhaltung aktueller und kommender EU-Verordnungen zum Digitalen Produktpass.
@@ -14,9 +527,9 @@ Die größte strategische und finanzielle Gefahr bei der Einführung des Digital
 
 Dieses System eliminiert diese Gefahren radikal durch eine **strikte, zustandslose (Stateless) Architektur**:
 
-1. **Keine redundante Datenhaltung (Zero-DB):** Das System speichert keine Produktdaten dauerhaft. Es agiert als intelligenter, kryptografischer "Durchlauferhitzer" (Resolver). Die Daten verbleiben in der Hoheit Ihrer bestehenden Master-Systeme (ERP, SAP). Der Resolver zieht diese Daten in Echtzeit, signiert sie kryptografisch und liefert sie aus. 
+1. **Keine redundante Datenhaltung (Zero-DB):** Das System speichert keine Produktdaten dauerhaft. Es agiert als intelligenter, kryptografischer "Durchlauferhitzer" (Resolver). Die Daten verbleiben in der Hoheit Ihrer bestehenden Master-Systeme (ERP, SAP). Der Resolver zieht diese Daten in Echtzeit, signiert sie kryptografisch und liefert sie aus.  
    **Das Resultat:** Es gibt keine desynchronisierten Datenbanken, keine DSGVO-Gefahren durch verwaiste Datensätze und keine "Single Points of Failure" in der Datenhaltung.
-2. **Die Hard-Blocking Compliance Firewall:** Das System besitzt eine integrierte, unumgehbare Validierungs-Engine für den CEN/CENELEC JTC 24 Standard. Fehlt in den Quell-Daten ein von der EU gesetzlich vorgeschriebenes Feld (z.B. der `carbonFootprint`), greift ein sofortiger **HTTP 422 Hard-Block**. 
+2. **Die Hard-Blocking Compliance Firewall:** Das System besitzt eine integrierte, unumgehbare Validierungs-Engine für den CEN/CENELEC JTC 24 Standard. Fehlt in den Quell-Daten ein von der EU gesetzlich vorgeschriebenes Feld (z.B. der `carbonFootprint`), greift ein sofortiger **HTTP 422 Hard-Block**.  
    **Das Resultat:** Es ist technisch absolut unmöglich, versehentlich einen unvollständigen oder illegalen Produktpass an eine Behörde oder einen Kunden auszuliefern.
 
 ---
@@ -25,7 +538,7 @@ Dieses System eliminiert diese Gefahren radikal durch eine **strikte, zustandslo
 
 Die Übersetzung komplexer juristischer Gesetzestexte in fehlerfreien Softwarecode ist die anspruchsvollste Disziplin der Softwareentwicklung. Dieses Projekt wurde streng nach dem Prinzip des **Compliance-Driven Development (CDD)** entwickelt. 
 
-**Referenz für regulatorische Präzision:** 
+**Referenz für regulatorische Präzision:**  
 Die in diesem Projekt angewandte Architektur und Test-Methodik entstammt der erfolgreichen Entwicklung einer deutschen **Tax-Engine (PAP2026)** ([Source Code Repository auf GitHub](https://github.com/xheen908/DRP2/tree/main/tax-engine-cpp)). Bei diesem Vorläuferprojekt wurde der hochkomplexe Programmablaufplan des Bundesministeriums der Finanzen (BMF) für 2025/2026 vollständig in Code übersetzt. Eine engmaschige Test-Suite beweist dort, dass die Engine auf den Cent genau exakt jene Daten ausgibt, die die offiziellen Regierungs-Tabellen vorgeben. 
 
 **Exakt dieselbe regulatorische und mathematische Präzision kommt hier für die EU-Verordnung (ESPR) zur Anwendung.** Die Software vertraut keinen Daten blind. Jede Information wird vor der Ausstellung des Passes durch ein rigoroses W3C-Schema geprüft. Diese Test-Suite ist das ultimative Sicherheitsnetz für das Management.
@@ -72,10 +585,10 @@ Auszug aus den automatisierten Live-Tests:
 
 Die EU ESPR-Verordnung bildet nur das Basis-Set an Daten. Spezifische Branchen – insbesondere der **Medizinsektor (Pharma & Medizintechnik)** – unterliegen durch sogenannte EU "Delegated Acts" oder die EU-MDR (Medical Device Regulation) weitaus strengeren, sich dynamisch ändernden Datenpflichten (z.B. Beipackzettel, toxikologische Gutachten, SVHC-Grenzwerte).
 
-**Hier greift der größte Vorteil der zustandslosen (Stateless) Architektur:**
+**Hier greift der größte Vorteil der zustandslosen (Stateless) Architektur:**  
 Da der Resolver *keine* eigene Produktdatenbank besitzt, ist er vollständig immun gegen sich ändernde EU-Gesetze. Wenn die EU morgen neue Felder für Medizinprodukte vorschreibt, müssen diese lediglich in Ihrem bestehenden ERP-System ergänzt werden. Der Resolver greift diese neuen Felder in Echtzeit ab und integriert sie vollautomatisch in den kryptografischen Produktpass. 
 
-**Erweiterbarkeit (Die letzten 5% zur Voll-Integration):**
+**Erweiterbarkeit (Die letzten 5% zur Voll-Integration):**  
 Die vorliegende Infrastruktur beweist die Architektur und das W3C-Schema. Für den finalen Produktionsbetrieb lassen sich folgende Module nahtlos in diesen Resolver einklinken:
 * **W3C Cryptographic Proofs:** Automatisiertes Signieren des JSON-LD mittels URDNA2015 und Hardware-KMS.
 * **CSW-CERTEX Schnittstelle:** Direkte Anbindung an das "EU Customs Single Window" zur automatisierten Zollabfertigung.
@@ -155,6 +668,7 @@ Fehlt ein gesetzlich vorgeschriebenes Feld (z.B. `carbonFootprint`), gibt der Re
 Ab diesem Punkt funktioniert die Content Negotiation wie im Abschnitt `Integration & API` beschrieben.
 
 ---
+
 ## 🚀 Integration & API
 
 Das System ist als geschlossene, hochskalierbare Black-Box-Architektur (Managed Service) konzipiert, um maximale Sicherheit und laufende Updates der EU-Regulatorik ohne Aufwand auf Kundenseite zu garantieren. 
